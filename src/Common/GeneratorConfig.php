@@ -45,6 +45,8 @@ class GeneratorConfig
     public $mCamelPlural;
     public $mSnake;
     public $mSnakePlural;
+    public $mDashed;
+    public $mDashedPlural;
 
     public $forceMigrate;
 
@@ -96,6 +98,7 @@ class GeneratorConfig
         }
 
         $this->nsApp = $commandData->commandObj->getLaravel()->getNamespace();
+        $this->nsApp = substr($this->nsApp, 0, strlen($this->nsApp)-1);
         $this->nsRepository = config('infyom.laravel_generator.namespace.repository', 'App\Repositories').$prefix;
         $this->nsModel = config('infyom.laravel_generator.namespace.model', 'App\Models').$prefix;
         $this->nsDataTables = config('infyom.laravel_generator.namespace.datatables', 'App\DataTables').$prefix;
@@ -201,6 +204,8 @@ class GeneratorConfig
         $commandData->addDynamicVariable('$MODEL_NAME_PLURAL_CAMEL$', $this->mCamelPlural);
         $commandData->addDynamicVariable('$MODEL_NAME_SNAKE$', $this->mSnake);
         $commandData->addDynamicVariable('$MODEL_NAME_PLURAL_SNAKE$', $this->mSnakePlural);
+        $commandData->addDynamicVariable('$MODEL_NAME_DASHED$', $this->mDashed);
+        $commandData->addDynamicVariable('$MODEL_NAME_PLURAL_DASHED$', $this->mDashedPlural);
 
         if (!empty($this->prefixes['route'])) {
             $commandData->addDynamicVariable('$ROUTE_NAMED_PREFIX$', $this->prefixes['route'].'.');
